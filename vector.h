@@ -95,7 +95,23 @@ void vector_prepend(vector_t *vector, void *__restrict__ data, void *(*cloner)(v
  * @note If the index is greater than the length of the vector, the node will not be inserted.
  */
 void vector_insert(vector_t *vector, size_t index, void *__restrict__ data, void *(*cloner)(void*));
+
+/**
+ * @brief Remove the node at the given index.
+ * @param vector The vector to remove the node from.
+ * @param index The index of the node to remove.
+ * @param destroyer The function to call to destroy the data in the node.
+ * @note If destroyer is NULL, the data in the node will not be destroyed.
+ * @note If destroyer is not NULL, the data in the node will be destroyed using the destroyer function.
+ */
 void vector_remove(vector_t *vector, size_t index, void (*destroyer)(void*));
+
+/**
+ * @brief Get the node at the given index.
+ * @param vector The vector to get the node from.
+ * @param index The index of the node to get.
+ * @return A pointer to the node at the given index.
+ */
 void *vector_at(vector_t *vector, size_t index);
 
 #endif

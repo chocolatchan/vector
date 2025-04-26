@@ -173,6 +173,30 @@ void vector_insert(vector_t *vector, size_t index, void *__restrict__ data, void
     vector->length++;
 }
 
+void vector_remove(vector_t *vector, size_t index, void (*destroyer)(void*)) {
+    if (vector == NULL) {
+        return;
+    }
+    if (index >= vector->length) {
+        return;
+    }
+    node_t *current = __vector_at_unchk(vector, index);
+    
+    if (current->prev != NULL) {
+        (current->prev)->next = current->next;
+    } else {
+        vector->head = current->next;
+    }
+    if (current->next != NULL) {
+        (current->next)->prev = current->prev;
+    } else {
+        vector->tail = current->prev;
+    }
+    
+    node_destroy(current, destroyer);
+    vector->length--;
+}
+
 void *vector_at(vector_t *vector, size_t index) {
     if (vector == NULL) {
         return NULL;
