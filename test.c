@@ -15,7 +15,9 @@ int main() {
     vector_prepend(&v, (void*) &a_2, NULL);
     printf("Vector size: %d\n", v.length);
     printf("Vector[0]: %d\n", *(int*) vector_at(&v, 0));
-    
+    vector_remove(&v, 0, NULL);
+    printf("Vector size: %d\n", v.length);
+    printf("Vector[0]: %d\n", *(int*) vector_at(&v, 0));
 
     vector_t *v2 = vector_init_h(sizeof(int));
     int b = 20;
