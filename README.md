@@ -1,15 +1,17 @@
 # vector 
-implementation of vector in c
-using doubly linked list as core
+Implementation of vector in C programming language.
+Using doubly linked-list structure as core.
 
-- for running test:
-  - linux | unix-like
-  ```
+
+---
+- For running test:
+  - Linux | Unix-like systems
+  ```bash
   gcc test.c vector.c -C -o test
   ./test
   ```
-  - windows
-  ```
+  - Windows
+  ```PowerShell
   gcc test.c vector.c -C -o test.exe
   ./test.exe
   ```
