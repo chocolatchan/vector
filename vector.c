@@ -185,6 +185,14 @@ void vector_prepend(vector_t *vector, void *__restrict__ data, void *(*cloner)(v
     vector->length++;
 }
 
+node_t *__vector_at_unchk(vector_t *vector, size_t index) {
+    node_t *current = vector->head;
+    for (size_t i = 0; i < index; i++) {
+        current = current->next;
+    }
+    return current;
+}
+
 /**
  * @brief Insert a new node at the left of the given index.
  * @param vector The vector to insert the node into.
@@ -209,10 +217,8 @@ void vector_insert(vector_t *vector, size_t index, void *__restrict__ data, void
         vector_append(vector, data, cloner);
         return;
     }
-    node_t *current = vector->head;
-    for (size_t i = 0; i < index; i++) {
-        current = current->next;
-    }
+    node_t *current = __vector_at_unchk(vector, index);
+    
     node_t *node = node_init(data, vector->size, current, current->prev, cloner);
     if (node == NULL) {
         return;
@@ -221,6 +227,19 @@ void vector_insert(vector_t *vector, size_t index, void *__restrict__ data, void
     (current->prev)->next = node;
     current->prev = node;
     vector->length++;
+}
+
+void *vector_at(vector_t *vector, size_t index) {
+    if (vector == NULL) {
+        return NULL;
+    }
+    if (index >= vector->length) {
+        return NULL;
+    }
+    node_t *current = __vector_at_unchk(vector, index);
+
+    return current->data;
+
 }
 
 #pragma endregion vector

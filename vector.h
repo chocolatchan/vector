@@ -39,5 +39,6 @@ void vector_append(vector_t *vector, void *__restrict__ data, void *(*cloner)(vo
 void vector_prepend(vector_t *vector, void *__restrict__ data, void *(*cloner)(void*));
 void vector_insert(vector_t *vector, size_t index, void *__restrict__ data, void *(*cloner)(void*));
 void vector_remove(vector_t *vector, size_t index, void (*destroyer)(void*));
+void *vector_at(vector_t *vector, size_t index);
 
 #endif
