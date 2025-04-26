@@ -11,7 +11,7 @@ Using doubly linked-list structure as core.
   ./test
   ```
   - Windows
-  ```PowerShell
+  ```posh
   gcc test.c vector.c -C -o test.exe
   ./test.exe
   ```
