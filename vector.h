@@ -29,6 +29,8 @@ struct vector {
     size_t  length;
     size_t  size;
     int     is_heap;
+    void   *(*cloner)(void*);
+    void    (*destroyer)(void*);
 };
 
 /**
@@ -37,7 +39,7 @@ struct vector {
  * @return A pointer to the initialized vector.
  * @note The vector will be empty after this function is called.
  */
-vector_t *vector_init_h(size_t size);
+vector_t *vector_init_h(size_t size, void *(*cloner)(void*), void (*destroyer)(void*));
 
 /**
  * @brief Initialize a vector on stack with the given size.
@@ -45,7 +47,7 @@ vector_t *vector_init_h(size_t size);
  * @param size The size of the data in each node.
  * @note The vector will be empty after this function is called.
  */
-void vector_init_s(vector_t *vector, size_t size);
+void vector_init_s(vector_t *vector, size_t size, void *(*cloner)(void*), void (*destroyer)(void*));
 
 /**
  * @brief Clear the vector and all its nodes.
@@ -55,7 +57,7 @@ void vector_init_s(vector_t *vector, size_t size);
  * @note If destroyer is not NULL, the data in each node will be destroyed using the destroyer function.
  * @note The vector will be empty after this function is called.
  */
-void vector_clear(vector_t *vector, void (*destroyer)(void*));
+void vector_clear(vector_t *vector);
 
 /**
  * @brief Destroy the vector and all its nodes.
@@ -65,7 +67,7 @@ void vector_clear(vector_t *vector, void (*destroyer)(void*));
  * @note If destroyer is not NULL, the data in each node will be destroyed using the destroyer function.
  * @note The vector will be NULL after this function is called.
  */
-void vector_destroy(vector_t *vector, void (*destroyer)(void*));
+void vector_destroy(vector_t *vector);
 
 /**
  * @brief Append a new node to the vector.
@@ -74,7 +76,7 @@ void vector_destroy(vector_t *vector, void (*destroyer)(void*));
  * @param cloner The function to call to clone the data in the node.
  * @note If the vector is empty, the node will be prepended.
  */
-void vector_append(vector_t *vector, void *__restrict__ data, void *(*cloner)(void*));
+void vector_append(vector_t *vector, void *__restrict__ data);
 
 /**
  * @brief Prepend a new node to the vector.
@@ -83,7 +85,7 @@ void vector_append(vector_t *vector, void *__restrict__ data, void *(*cloner)(vo
  * @param cloner The function to call to clone the data in the node.
  * @note If the vector is empty, the node will be appended.
  */
-void vector_prepend(vector_t *vector, void *__restrict__ data, void *(*cloner)(void*));
+void vector_prepend(vector_t *vector, void *__restrict__ data);
 
 /**
  * @brief Insert a new node at the left of the given index.
@@ -94,7 +96,7 @@ void vector_prepend(vector_t *vector, void *__restrict__ data, void *(*cloner)(v
  * @note If the index is equal to the length of the vector, the node will be appended.
  * @note If the index is greater than the length of the vector, the node will not be inserted.
  */
-void vector_insert(vector_t *vector, size_t index, void *__restrict__ data, void *(*cloner)(void*));
+void vector_insert(vector_t *vector, size_t index, void *__restrict__ data);
 
 /**
  * @brief Remove the node at the given index.
@@ -104,7 +106,7 @@ void vector_insert(vector_t *vector, size_t index, void *__restrict__ data, void
  * @note If destroyer is NULL, the data in the node will not be destroyed.
  * @note If destroyer is not NULL, the data in the node will be destroyed using the destroyer function.
  */
-void vector_remove(vector_t *vector, size_t index, void (*destroyer)(void*));
+void vector_remove(vector_t *vector, size_t index);
 
 /**
  * @brief Get the node at the given index.
@@ -112,6 +114,15 @@ void vector_remove(vector_t *vector, size_t index, void (*destroyer)(void*));
  * @param index The index of the node to get.
  * @return A pointer to the node at the given index.
  */
-void *vector_at(vector_t *vector, size_t index);
+void *vector_at(vector_t vector, size_t index);
+
+void vector_foreach(vector_t *vector, void (*action)(void*));
+
+vector_t *vector_map(vector_t vector, void (*transform)(void*));
+
+vector_t *vector_filter(vector_t vector, int (*predicate)(void*));
+
+vector_t *vector_reduce(vector_t vector, void (*accumulator)(void*), void *initial_value);
+
 
 #endif
