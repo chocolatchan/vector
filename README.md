@@ -5,11 +5,18 @@
 
 ---
 ### For running test:
-  - **Linux | Unix-like systems**
+  - **Linux**
   ```bash
   gcc test.c vector.c -C -o test
   ./test
   ```
+  - **macOS (Apple Clang)**
+  ```bash
+  clang -c vector.c test.c
+  clang vector.o test.o -o test
+  ./test
+  ```
+
   - **Windows**
   ```cmd
   gcc test.c vector.c -C -o test.exe
