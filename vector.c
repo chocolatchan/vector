@@ -252,4 +252,22 @@ vector_t *vector_map(vector_t vector, void (*transform)(void*)) {
     return result;
 }
 
+vector_t *vector_filter(vector_t vector, int (*predicate)(void*)) {
+    if (&vector == NULL) {
+        return NULL;
+    }
+    vector_t *result = vector_init_h(vector.size, vector.cloner, vector.destroyer);
+    if (result == NULL) {
+        return NULL;
+    }
+    node_t *current = vector.head;
+    while (current != NULL) {
+        if (predicate(current->data)) {
+            vector_append(result, current->data);
+        }
+        current = current->next;
+    }
+    return result;
+}
+
 #pragma endregion vector

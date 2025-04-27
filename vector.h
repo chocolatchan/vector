@@ -116,8 +116,20 @@ void vector_remove(vector_t *vector, size_t index);
  */
 void *vector_at(vector_t vector, size_t index);
 
+/**
+ * @brief Iterate over each node in the vector and apply the given action.
+ * @param vector The vector to iterate over.
+ * @param action The function to call for each node.
+ * @note The action function will be called with the data in the node as its argument.
+ */
 void vector_foreach(vector_t *vector, void (*action)(void*));
 
+/**
+ * @brief Create a new vector by applying the given transform to each node in the vector.
+ * @param vector The vector to transform.
+ * @param transform The function to call for each node.
+ * @note The transform function will be called with the data in the node as its argument.
+ */
 vector_t *vector_map(vector_t vector, void (*transform)(void*));
 
 vector_t *vector_filter(vector_t vector, int (*predicate)(void*));
