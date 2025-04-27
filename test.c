@@ -51,6 +51,11 @@ int main() {
     vector_t *v_filtered = vector_filter(v, gt15_mask);
     printf("Vector after filtered with gt15:\n");
     vector_print(*v_filtered, printer);
+    vector_destroy(v_filtered);
+
+    vector_t cpy = *vector_copy(v);
+    printf("Vector copy:\n");
+    vector_print(cpy, printer);
     
 
     // Test 3: Remove elements

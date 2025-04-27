@@ -117,6 +117,11 @@ void vector_remove(vector_t *vector, size_t index);
  */
 void *vector_at(vector_t vector, size_t index);
 
+/**
+ * @brief Copy the vector and all its nodes.
+ * @param vector The vector to copy.
+ * @return A pointer to the copied vector.
+ */
 vector_t *vector_copy(vector_t vector);
 
 /**
@@ -135,11 +140,34 @@ void vector_foreach(vector_t *vector, void (*action)(void*));
  */
 vector_t *vector_map(vector_t vector, void (*transform)(void*));
 
+/**
+ * @brief Create a new vector by filtering the nodes in the vector using the given predicate.
+ * @param vector The vector to filter.
+ * @param predicate The function to call for each node.
+ * @return A new vector containing only the nodes that match the predicate.
+ * @note The predicate function will be called with the data in the node as its argument.
+ */
 vector_t *vector_filter(vector_t vector, int (*predicate)(void*));
 
+/**
+ * @brief Reduce the vector to a single value by applying the given accumulator function.
+ * @param vector The vector to reduce.
+ * @param accumulator The function to call for each node.
+ * @param default_value The initial value to use for the reduction.
+ * @return The reduced value.
+ * @note The accumulator function will be called with the current reduced value and the data in the node as its arguments.
+ */
 void *vector_reduce(vector_t vector, void (*accumulator)(void*, void*), void *default_value);
 
+/**
+ * @brief Print the vector using the given printer function.
+ * @param vector The vector to print.
+ * @param printer The function to call for each node.
+ * @note The printer function will be called with the data in the node as its argument.
+ */
 void vector_print(vector_t vector, void (*printer)(void*));
+
+
 
 
 #endif
