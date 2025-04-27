@@ -47,6 +47,8 @@ void node_destroy(node_t *node, void (*destroyer)(void*)) {
 
 #pragma region vector
 
+#pragma region basic
+
 vector_t *vector_init_h(size_t size, void *(*cloner)(void*), void (*destroyer)(void*)) {
     vector_t *vector = (vector_t*) malloc(sizeof(vector_t));
     if (vector == NULL) {
@@ -225,6 +227,10 @@ void *vector_at(vector_t vector, size_t index) {
     return current->data;   
 }
 
+#pragma endregion basic
+
+#pragma region functional
+
 void vector_foreach(vector_t *__restrict__ vector, void (*action)(void*)) {
     if (vector == NULL) {
         return;
@@ -289,6 +295,10 @@ void *vector_reduce(vector_t vector, void (*accumulator)(void*, void*), void* de
     return result;
 }
 
+#pragma endregion functional
+
+#pragma region utilities
+
 void vector_print(vector_t vector, void (*printer)(void*)) {
     if (&vector == NULL) {
         return;
@@ -302,5 +312,44 @@ void vector_print(vector_t vector, void (*printer)(void*)) {
     }
     printf("]\n");
 }
+
+void vector_reverse(vector_t *__restrict__ vector) {
+    if (vector == NULL) {
+        return;
+    }
+    node_t *current = vector->head;
+    node_t *temp = NULL;
+    while (current != NULL) {
+
+                 temp = current->prev;
+        current->prev = current->next;
+        current->next = temp;
+
+        current = current->prev;
+    }
+    if (temp != NULL) {
+        vector->head = temp->prev;
+    }
+}
+
+void vector_merge(vector_t *__restrict__ vector1, vector_t *vector2) {
+    if (vector1 == NULL || &vector2 == NULL) {
+        return;
+    }
+    vector_t *clone = vector_copy(*vector2);
+    if (clone == NULL) {
+        return;
+    }
+    vector1->tail->next = clone->head;
+    clone->head->prev = vector1->tail;
+    vector1->tail = clone->tail;
+    vector1->length += clone->length;
+    
+    clone->head = NULL;
+    clone->tail = NULL;
+    vector_destroy(clone);
+}
+
+#pragma endregion utilities
 
 #pragma endregion vector

@@ -59,15 +59,20 @@ int main() {
     
 
     // Test 3: Remove elements
-    vector_remove(&v, 0);
-    printf("Vector size after removing index 0: %d\n", v.length);
-    printf("Vector[0]: %d\n", *(int*) vector_at(v, 0));
+    // vector_remove(&v, 0);
+    // printf("Vector size after removing index 0: %d\n", v.length);
+    // printf("Vector[0]: %d\n", *(int*) vector_at(v, 0));
 
     // Test 4: Initialize a heap-allocated vector
     vector_t *v2 = vector_init_h(sizeof(int), NULL, NULL);
     int b = 50;
     vector_append(v2, &b);
+    vector_prepend(v2, &a_1);
     printf("Heap vector size: %d\n", v2->length);
+    vector_print(*v2, printer);
+
+    printf("After merge:\n");
+    vector_merge(v2, &v);
     vector_print(*v2, printer);
 
     // Cleanup

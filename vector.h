@@ -173,7 +173,19 @@ void *vector_reduce(vector_t vector, void (*accumulator)(void*, void*), void *__
  */
 void vector_print(vector_t vector, void (*printer)(void*));
 
+/**
+ * @brief Reverse the vector in place.
+ * @param vector The vector to reverse.
+ * @note The vector will be reversed in place.
+ */
+void vector_reverse(vector_t *__restrict__ vector);
 
-
+/**
+ * @brief Merge two vectors into the first vector.
+ * @param vector1 The first vector to merge into.
+ * @param vector2 The second vector to merge from.
+ * @note The second vector will be cloned and append after the first vector.
+ */
+void vector_merge(vector_t *__restrict__ vector1, vector_t *vector2);
 
 #endif
