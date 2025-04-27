@@ -270,4 +270,21 @@ vector_t *vector_filter(vector_t vector, int (*predicate)(void*)) {
     return result;
 }
 
+void *vector_reduce(vector_t vector, void (*accumulator)(void*, void*), void* default_value) {
+    if (&vector == NULL) {
+        return NULL;
+    }
+
+    void *result = vector.cloner(default_value);
+    if (result == NULL) {
+        return NULL;
+    }
+    node_t *current = vector.head;
+    while (current != NULL) {
+        accumulator(result, current->data);
+        current = current->next;
+    }
+    return result;
+}
+
 #pragma endregion vector
