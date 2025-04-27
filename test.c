@@ -5,14 +5,26 @@ void add_one(int *data) {
     *data += 1;
 }
 
-int sum(int *x, int *y) {
+void sum(int *x, int *y) {
     *x += *y;
 }
 
+int gt15(int *x) {
+    return *x > 15;
+}
+
+void int_printer(int *data) {
+    printf("%d", *data);
+}
+
 int main() {
+    void (*printer)(void*) = (void (*)(void*)) int_printer;
+
     void (*add_one_mask)(void*) = (void (*)(void*)) add_one;
 
     void (*sum_mask)(void*, void*) = (void (*)(void*, void*)) sum;
+
+    int (*gt15_mask)(void*) = (int (*)(void*)) gt15;
 
     printf("Testing vector.h\n");
 
@@ -25,20 +37,21 @@ int main() {
     vector_prepend(&v, &a_2);
     vector_append(&v, &a_3);
 
-    printf("Vector size after append/prepend: %d\n", v.length);
-    printf("Vector[0]: %d\n", *(int*) vector_at(v, 0));
-    printf("Vector[1]: %d\n", *(int*) vector_at(v, 1));
-    printf("Vector[2]: %d\n", *(int*) vector_at(v, 2));
+    printf("Vector size after append/prepend: %zu\n", v.length);
+    vector_print(v, printer);
 
     // Test 2: Apply a function to all elements
     vector_foreach(&v, add_one_mask);
     printf("After applying add_one:\n");
-    printf("Vector[0]: %d\n", *(int*) vector_at(v, 0));
-    printf("Vector[1]: %d\n", *(int*) vector_at(v, 1));
-    printf("Vector[2]: %d\n", *(int*) vector_at(v, 2));
+    vector_print(v, printer);
 
     int zero = 0;
     printf("After applying sum: %d\n", *(int*) vector_reduce(v, sum_mask, &zero));
+
+    vector_t *v_filtered = vector_filter(v, gt15_mask);
+    printf("Vector after filtered with gt15:\n");
+    vector_print(*v_filtered, printer);
+    
 
     // Test 3: Remove elements
     vector_remove(&v, 0);
@@ -50,7 +63,7 @@ int main() {
     int b = 50;
     vector_append(v2, &b);
     printf("Heap vector size: %d\n", v2->length);
-    printf("Heap Vector[0]: %d\n", *(int*) vector_at(*v2, 0));
+    vector_print(*v2, printer);
 
     // Cleanup
     vector_destroy(v2);

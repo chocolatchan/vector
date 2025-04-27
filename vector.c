@@ -289,4 +289,18 @@ void *vector_reduce(vector_t vector, void (*accumulator)(void*, void*), void* de
     return result;
 }
 
+void vector_print(vector_t vector, void (*printer)(void*)) {
+    if (&vector == NULL) {
+        return;
+    }
+    node_t *current = vector.head;
+    printf("[");
+    while (current != NULL) {
+        printer(current->data);
+        printf("%s", current->next != NULL ? ", " : "");
+        current = current->next;
+    }
+    printf("]\n");
+}
+
 #pragma endregion vector

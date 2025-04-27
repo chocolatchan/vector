@@ -3,6 +3,7 @@
 
 #include <stdlib.h>
 #include <string.h>
+#include <stdio.h>
 
 // --- --- --- ---
 
@@ -116,6 +117,8 @@ void vector_remove(vector_t *vector, size_t index);
  */
 void *vector_at(vector_t vector, size_t index);
 
+vector_t *vector_copy(vector_t vector);
+
 /**
  * @brief Iterate over each node in the vector and apply the given action.
  * @param vector The vector to iterate over.
@@ -135,6 +138,8 @@ vector_t *vector_map(vector_t vector, void (*transform)(void*));
 vector_t *vector_filter(vector_t vector, int (*predicate)(void*));
 
 void *vector_reduce(vector_t vector, void (*accumulator)(void*, void*), void *default_value);
+
+void vector_print(vector_t vector, void (*printer)(void*));
 
 
 #endif
