@@ -8,23 +8,23 @@ int main() {
     // Add your vector initialization and test cases here
     // Example:
     vector_t v;
-    vector_init_s(&v, sizeof(int));
+    vector_init_s(&v, sizeof(int), NULL, NULL);
     int a_1 = 10; int a_2 = 20;
-    vector_append(&v, (void*) &a_1, NULL);
+    vector_append(&v, (void*) &a_1);
     printf("Vector size: %d\n", v.length);
-    vector_prepend(&v, (void*) &a_2, NULL);
+    vector_prepend(&v, (void*) &a_2);
     printf("Vector size: %d\n", v.length);
-    printf("Vector[0]: %d\n", *(int*) vector_at(&v, 0));
-    vector_remove(&v, 0, NULL);
+    printf("Vector[0]: %d\n", *(int*) vector_at(v, 0));
+    vector_remove(&v, 0);
     printf("Vector size: %d\n", v.length);
-    printf("Vector[0]: %d\n", *(int*) vector_at(&v, 0));
+    printf("Vector[0]: %d\n", *(int*) vector_at(v, 0));
 
-    vector_t *v2 = vector_init_h(sizeof(int));
+    vector_t *v2 = vector_init_h(sizeof(int), NULL, NULL);
     int b = 20;
-    vector_append(v2, (void*) &b, NULL);
+    vector_append(v2, (void*) &b);
     printf("Vector size: %d\n", v2->length);
-    vector_destroy(v2, NULL);
-    vector_destroy(&v, NULL);
+    vector_destroy(v2);
+    vector_destroy(&v);
 
     return 0;
 }
