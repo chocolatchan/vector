@@ -134,7 +134,7 @@ vector_t *vector_map(vector_t vector, void (*transform)(void*));
 
 vector_t *vector_filter(vector_t vector, int (*predicate)(void*));
 
-void *vector_reduce(vector_t vector, void (*accumulator)(void*), void *initial);
+void *vector_reduce(vector_t vector, void (*accumulator)(void*, void*), void *default_value);
 
 
 #endif

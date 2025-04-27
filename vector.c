@@ -271,13 +271,15 @@ vector_t *vector_filter(vector_t vector, int (*predicate)(void*)) {
 }
 
 void *vector_reduce(vector_t vector, void (*accumulator)(void*, void*), void* default_value) {
-    if (&vector == NULL) {
+    if (vector.head == NULL || default_value == NULL) {
         return NULL;
     }
 
-    void *result = vector.cloner(default_value);
-    if (result == NULL) {
-        return NULL;
+    void *result;
+    if (vector.cloner != NULL) {
+        result = vector.cloner(default_value);
+    } else {
+        result = default_value;
     }
     node_t *current = vector.head;
     while (current != NULL) {
