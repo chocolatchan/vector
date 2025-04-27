@@ -62,7 +62,7 @@ vector_t *vector_init_h(size_t size, void *(*cloner)(void*), void (*destroyer)(v
     return vector;
 }
 
-void vector_init_s(vector_t *vector, size_t size, void *(*cloner)(void*), void (*destroyer)(void*)) {
+void vector_init_s(vector_t *__restrict__ vector, size_t size, void *(*cloner)(void*), void (*destroyer)(void*)) {
     if (vector == NULL) {
         return;
     }
@@ -73,7 +73,7 @@ void vector_init_s(vector_t *vector, size_t size, void *(*cloner)(void*), void (
     vector->is_heap = 0;
 }
 
-static void __vector_clear_all_unchk(vector_t *vector) {
+static void __vector_clear_all_unchk(vector_t *__restrict__ vector) {
     node_t *current = vector->head;
     while (current != NULL) {
         node_t *next = current->next;
@@ -82,7 +82,7 @@ static void __vector_clear_all_unchk(vector_t *vector) {
     }
 }
 
-void vector_clear(vector_t *vector) {
+void vector_clear(vector_t *__restrict__ vector) {
     if (vector == NULL) {
         return;
     }
@@ -93,7 +93,7 @@ void vector_clear(vector_t *vector) {
     vector->length = 0;
 }
 
-void vector_destroy(vector_t *vector) {
+void vector_destroy(vector_t *__restrict__ vector) {
     if (vector == NULL) {
         return;
     }
@@ -102,7 +102,7 @@ void vector_destroy(vector_t *vector) {
     if (vector->is_heap) free(vector);
 }
 
-void vector_append(vector_t *vector, void *__restrict__ data) {
+void vector_append(vector_t *__restrict__ vector, void *__restrict__ data) {
     if (vector == NULL) {
         return;
     }
@@ -120,7 +120,7 @@ void vector_append(vector_t *vector, void *__restrict__ data) {
     vector->length++;
 }
 
-void vector_prepend(vector_t *vector, void *__restrict__ data) {
+void vector_prepend(vector_t *__restrict__ vector, void *__restrict__ data) {
     if (vector == NULL) {
         return;
     }
@@ -146,7 +146,7 @@ static node_t *__vector_at_unchk(vector_t *vector, size_t index) {
     return current;
 }
 
-void vector_insert(vector_t *vector, size_t index, void *__restrict__ data) {
+void vector_insert(vector_t *__restrict__ vector, size_t index, void *__restrict__ data) {
     if (vector == NULL) {
         return;
     }
@@ -173,7 +173,7 @@ void vector_insert(vector_t *vector, size_t index, void *__restrict__ data) {
     vector->length++;
 }
 
-void vector_remove(vector_t *vector, size_t index) {
+void vector_remove(vector_t *__restrict__ vector, size_t index) {
     if (vector == NULL) {
         return;
     }
@@ -225,7 +225,7 @@ void *vector_at(vector_t vector, size_t index) {
     return current->data;   
 }
 
-void vector_foreach(vector_t *vector, void (*action)(void*)) {
+void vector_foreach(vector_t *__restrict__ vector, void (*action)(void*)) {
     if (vector == NULL) {
         return;
     }
