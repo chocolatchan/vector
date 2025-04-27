@@ -17,8 +17,14 @@ struct node {
     node_t *prev;
 };
 
-node_t *node_init(void *__restrict__ data, size_t size, node_t *next, node_t *prev, void *(*cloner)(void*));
-void node_destroy(node_t *node, void (*destroyer)(void*));
+node_t *node_init(void *__restrict__ data,
+                  size_t size,
+                  node_t *next,
+                  node_t *prev,
+                  void *(*cloner)(void*));
+
+void node_destroy(node_t *node,
+                  void (*destroyer)(void*));
 
 // --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- ---
 
