@@ -1,24 +1,7 @@
-# Vector 
-- Implementation of vector in C programming language.
-- Using doubly linked-list structure as core.
+# DSA 
+- Implementation of various data structure in C/C++ programming language.
+
+## VECTOR
+- Using doubly linked-list as core.
 
 
----
-### For running test:
-  - **Linux**
-  ```bash
-  gcc test.c vector.c -C -o test
-  ./test
-  ```
-  - **macOS (Apple Clang)**
-  ```bash
-  clang -c vector.c test.c
-  clang vector.o test.o -o test
-  ./test
-  ```
-
-  - **Windows**
-  ```cmd
-  gcc test.c vector.c -C -o test.exe
-  ./test.exe
-  ```
