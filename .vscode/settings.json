@@ -1,6 +1,10 @@
 {
     "files.associations": {
         "vector.h": "c",
-        "string.h": "c"
+        "string.h": "c",
+        "array": "cpp",
+        "string": "cpp",
+        "string_view": "cpp",
+        "span": "cpp"
     }
 }
